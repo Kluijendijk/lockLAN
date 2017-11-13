@@ -88,7 +88,7 @@ public class Odometry {
     public void drawMap() {
 	StdDraw.setPenColor(StdDraw.RED);
 	StdDraw.filledCircle(x, y, 0.2);
-	StdDraw.filledCircle(x, y, field);
+	StdDraw.circle(x, y, field);
 	StdDraw.setPenColor(StdDraw.BLACK);
 	double[] rightWheel = getRightWheel();
 	double[] leftWheel = getLeftWheel();
