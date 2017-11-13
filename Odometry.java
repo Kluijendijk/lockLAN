@@ -3,6 +3,7 @@
  */
 
 import java.util.Scanner;
+//import edu.princeton.cs.algs4.*;
 
 public class Odometry {
 
@@ -85,10 +86,9 @@ public class Odometry {
 
     // Draws the robot from a fixed reference point
     public void drawMap() {
-	StdDraw.clear();
 	StdDraw.setPenColor(StdDraw.RED);
 	StdDraw.filledCircle(x, y, 0.2);
-	StdDraw.circle(x, y, field);
+	StdDraw.filledCircle(x, y, field);
 	StdDraw.setPenColor(StdDraw.BLACK);
 	double[] rightWheel = getRightWheel();
 	double[] leftWheel = getLeftWheel();
