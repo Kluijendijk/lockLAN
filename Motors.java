@@ -40,7 +40,7 @@ public class Motors {
     public Motors() {
 	leftSpeed = 0;
 	rightSpeed = 0;
-	frequency = 60; // updates speed at 60 Hz
+	frequency = 144; // updates speed at 60 Hz
 	Timer timer = new Timer(true); // initiates a daemon thread timer
 	TimerTask encoder = new UpdateDistances();;
 	timer.schedule(encoder, 0, (long) ((1/frequency)*1000)); // period is converted to millis
