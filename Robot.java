@@ -8,7 +8,24 @@ public class Robot {
 
     private Odometry odometer;
     private Pathfinding pathfinder;
+    private Motors motors;
     private int scale;
+
+    /*
+    private class Turn implements Move {
+	private double theta; // the angle to be turned to
+	public Turn(double theta) {
+	    this.theta = theta;
+	}
+    }
+
+    private class Forward implements Move {
+	private double distance; // the distance to be moved. This should be the node distance	
+	public Forward(double distance) {
+	    this.distance = distance;
+	}
+    }
+    */
 
     public void drawMap() {
 	StdDraw.clear();
@@ -17,20 +34,26 @@ public class Robot {
 	StdDraw.show();
     }
 
-    public Robot(int scale, Odometry odometer, Pathfinding pathfinder) {
+    public Robot(int scale, Odometry odometer, Pathfinding pathfinder, Motors motors) {
 	this.odometer = odometer;
 	this.pathfinder = pathfinder;
 	this.scale = scale;
+	this.motors = motors;
 	StdDraw.setScale(scale*(-1), scale);
 	StdDraw.enableDoubleBuffering();
     }
 
-    public void setRight(double totalR) {
-	odometer.setRight(totalR);
+    public void updateDistances() {
+	odometer.setRight(motors.getRightDistance());
+	odometer.setLeft(motors.getLeftDistance());
     }
 
-    public void setLeft(double totalL) {
-	odometer.setLeft(totalL);
+    public void setRightSpeed(double speed) {
+	motors.setRightSpeed(speed);
+    }
+
+    public void setLeftSpeed(double speed) {
+	motors.setLeftSpeed(speed);
     }
 
     public void updateOdometry() {
@@ -38,17 +61,17 @@ public class Robot {
     }
 
     public static void main(String args[]) {
-	Robot yui = new Robot(10, new Odometry(1, 0.8, 0, 0), new Pathfinding(10, 2));
+	Robot yui = new Robot(10, new Odometry(1, 0.8, 0, 0), new Pathfinding(10, 2), new Motors());
+	
+	double rightSpeed = 0.5;
+	double leftSpeed = -0.5;
 
-	double r = 0;
-	double l = 0;
+        yui.setLeftSpeed(leftSpeed);
+	yui.setRightSpeed(rightSpeed);
 	
 	try {
 	    while(true) {
-		r += 0.05;
-		l -= 0.05;;
-		yui.setRight(r);
-		yui.setLeft(l);
+		yui.updateDistances();
 		yui.updateOdometry();
 		yui.drawMap();
 		Thread.sleep(20);
